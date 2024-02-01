@@ -4,6 +4,8 @@ import noop from "lodash/noop";
 type MenuIds = "first" | "second" | "last";
 type Menu = { id: MenuIds; title: string };
 
+type SelectedMenu = {id?: MenuIds}
+type MenuSelected = { selectedMenu: SelectedMenu}
 // Додати тип Menu Selected
 
 const MenuSelectedContext = createContext<MenuSelected>({
@@ -12,12 +14,14 @@ const MenuSelectedContext = createContext<MenuSelected>({
 
 // Додайте тип MenuAction
 
+type MenuAction = { onSelectedMenu: (arg: SelectedMenu) => void}
+
 const MenuActionContext = createContext<MenuAction>({
   onSelectedMenu: noop,
 });
 
 type PropsProvider = {
-  children; // Додати тип для children
+  children: React.ReactElement; // Додати тип для children
 };
 
 function MenuProvider({ children }: PropsProvider) {
@@ -48,7 +52,7 @@ function MenuProvider({ children }: PropsProvider) {
 }
 
 type PropsMenu = {
-  menus; // Додайте вірний тип для меню
+  menus: Array<Menu>; // Додайте вірний тип для меню
 };
 
 function MenuComponent({ menus }: PropsMenu) {
